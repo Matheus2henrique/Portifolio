@@ -312,27 +312,3 @@ export const certificates = [
     thumb: "certificados/thumb/matheus-henrique-versionamento-git-dio.jpg",
   },
 ];
-
-export const testimonials = [
-  {
-    id: 1,
-    name: "Maria Silva",
-    role: "CEO, TechCorp",
-    text: "Excelente desenvolvedor! Entregou o projeto antes do prazo e com qualidade excepcional.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
-  },
-  {
-    id: 2,
-    name: "João Santos",
-    role: "CTO, StartupXYZ",
-    text: "Profissional altamente capacitado e dedicado. Recomendo para qualquer projeto web.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-  },
-  {
-    id: 3,
-    name: "Ana Oliveira",
-    role: "Product Manager",
-    text: "Conhecimento técnico impressionante e ótima comunicação. Um prazer trabalhar junto.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
-  },
-];
