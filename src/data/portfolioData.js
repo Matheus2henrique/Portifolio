@@ -7,10 +7,7 @@ export const personalInfo = {
   location: "Distrito Federal, Brasil",
   github: "https://github.com/Matheus2henrique",
   linkedin: "https://www.linkedin.com/in/matheushenrique-lopes/",
-  about: `Sou um desenvolvedor apaixonado por criar soluções web inovadoras.
-  Com experiência em React, Node.js, TypeScript e tecnologias modernas, transformo
-  ideias em realidade digital. Cada projeto é uma oportunidade de superar
-  limites e entregar excelência.`,
+  about: `Sou Desenvolvedor de Software com atuação focada em Engenharia de Dados, Backend e Automação de Processos. Atualmente, no Ministério dos Transportes, atuo no projeto e otimização de pipelines ETL de grande escala, integrações orientadas a eventos com Apache Kafka, Python e SQL, além do desenvolvimento de soluções de BI e prototipagem de Inteligência Artificial.`,
   skills: [
     { name: "React", level: 90 },
     { name: "JavaScript", level: 92 },
