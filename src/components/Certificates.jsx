@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, X, ChevronLeft, ChevronRight, Linkedin } from 'lucide-react';
+import { Award, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { certificates } from '../data/portfolioData';
 
 const resolveImage = (image) =>
@@ -8,16 +8,21 @@ const resolveImage = (image) =>
 
 const isPdf = (cert) => /\.pdf$/i.test(cert.image || '');
 
-const CertImage = ({ cert, className }) => {
+const CertImage = ({ cert, className, field = 'thumb' }) => {
   const [failed, setFailed] = useState(false);
-  const src = resolveImage(cert.image);
+  const src = resolveImage(cert[field]);
 
   if (!src || failed) {
     return (
       <div
-        className={`${className} flex items-center justify-center bg-gradient-to-br from-primary/30 to-secondary/30`}
+        className={`${className} flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-primary/30 via-dark to-secondary/30`}
       >
-        <Award className="w-12 h-12 text-primary" />
+        <Award className="w-10 h-10 text-primary" />
+        {isPdf(cert) && (
+          <span className="px-3 py-1 bg-primary/30 rounded-full text-xs font-semibold tracking-widest">
+            PDF
+          </span>
+        )}
       </div>
     );
   }
@@ -86,26 +91,14 @@ const Certificates = () => {
                       className="glass-card rounded-2xl overflow-hidden cursor-pointer group"
                       onClick={() => setSelectedCert(cert)}
                     >
-                      <div className="relative h-48 overflow-hidden">
-                        {isPdf(cert) ? (
-                          <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-primary/30 via-dark to-secondary/30">
-                            <Award className="w-10 h-10 text-primary" />
-                            <span className="px-3 py-1 bg-primary/30 rounded-full text-xs font-semibold tracking-widest">
-                              PDF
-                            </span>
-                          </div>
-                        ) : (
-                          <CertImage
-                            cert={cert}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent" />
-                        <div className="absolute bottom-4 left-4">
-                          <div className="p-3 bg-primary/20 backdrop-blur-sm rounded-full">
-                            <Award className="w-6 h-6 text-primary" />
-                          </div>
-                        </div>
+                      <div className="relative h-48 overflow-hidden bg-white/5">
+                        <CertImage
+                          cert={cert}
+                          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <span className="absolute top-3 left-3 px-2 py-1 bg-dark/70 backdrop-blur-sm rounded text-[10px] font-semibold tracking-widest text-primary">
+                          PDF
+                        </span>
                       </div>
                       <div className="p-6">
                         <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
@@ -197,18 +190,7 @@ const Certificates = () => {
                   </div>
                 </div>
                 {selectedCert.date && (
-                  <p className="text-gray-500 mb-6">Obtido em {selectedCert.date}</p>
-                )}
-                {selectedCert.link && (
-                  <a
-                    href={selectedCert.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-full text-white"
-                  >
-                    <Linkedin size={18} />
-                    Ver no LinkedIn
-                  </a>
+                  <p className="text-gray-500">Obtido em {selectedCert.date}</p>
                 )}
               </div>
             </motion.div>
