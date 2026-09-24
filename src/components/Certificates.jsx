@@ -1,7 +1,36 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Award, X, ChevronLeft, ChevronRight, Linkedin } from 'lucide-react';
 import { certificates } from '../data/portfolioData';
+
+const resolveImage = (image) =>
+  !image ? '' : /^https?:\/\//.test(image) ? image : `${import.meta.env.BASE_URL}${image}`;
+
+const isPdf = (cert) => /\.pdf$/i.test(cert.image || '');
+
+const CertImage = ({ cert, className }) => {
+  const [failed, setFailed] = useState(false);
+  const src = resolveImage(cert.image);
+
+  if (!src || failed) {
+    return (
+      <div
+        className={`${className} flex items-center justify-center bg-gradient-to-br from-primary/30 to-secondary/30`}
+      >
+        <Award className="w-12 h-12 text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={cert.title}
+      className={className}
+      onError={() => setFailed(true)}
+    />
+  );
+};
 
 const Certificates = () => {
   const [selectedCert, setSelectedCert] = useState(null);
@@ -14,6 +43,8 @@ const Certificates = () => {
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
   };
+
+  if (certificates.length === 0) return null;
 
   return (
     <section id="certificates" className="py-20 relative">
@@ -56,11 +87,19 @@ const Certificates = () => {
                       onClick={() => setSelectedCert(cert)}
                     >
                       <div className="relative h-48 overflow-hidden">
-                        <img
-                          src={cert.image}
-                          alt={cert.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
+                        {isPdf(cert) ? (
+                          <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-primary/30 via-dark to-secondary/30">
+                            <Award className="w-10 h-10 text-primary" />
+                            <span className="px-3 py-1 bg-primary/30 rounded-full text-xs font-semibold tracking-widest">
+                              PDF
+                            </span>
+                          </div>
+                        ) : (
+                          <CertImage
+                            cert={cert}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          />
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent" />
                         <div className="absolute bottom-4 left-4">
                           <div className="p-3 bg-primary/20 backdrop-blur-sm rounded-full">
@@ -69,11 +108,11 @@ const Certificates = () => {
                         </div>
                       </div>
                       <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
                           {cert.title}
                         </h3>
                         <p className="text-gray-400 text-sm">{cert.issuer}</p>
-                        <p className="text-gray-500 text-sm mt-1">{cert.date}</p>
+                        {cert.date && <p className="text-gray-500 text-sm mt-1">{cert.date}</p>}
                       </div>
                     </motion.div>
                   </div>
@@ -125,14 +164,21 @@ const Certificates = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-card rounded-2xl max-w-2xl w-full overflow-hidden"
+              className="glass-card rounded-2xl max-w-3xl w-full overflow-hidden"
             >
-              <div className="relative">
-                <img
-                  src={selectedCert.image}
-                  alt={selectedCert.title}
-                  className="w-full h-64 object-cover"
-                />
+              <div className="relative bg-black/40">
+                {isPdf(selectedCert) ? (
+                  <iframe
+                    title={selectedCert.title}
+                    src={resolveImage(selectedCert.image)}
+                    className="w-full h-[65vh] bg-black"
+                  />
+                ) : (
+                  <CertImage
+                    cert={selectedCert}
+                    className="w-full max-h-[65vh] object-contain"
+                  />
+                )}
                 <button
                   onClick={() => setSelectedCert(null)}
                   className="absolute top-4 right-4 p-2 bg-dark/50 rounded-full text-white hover:bg-dark"
@@ -150,16 +196,20 @@ const Certificates = () => {
                     <p className="text-gray-400">{selectedCert.issuer}</p>
                   </div>
                 </div>
-                <p className="text-gray-500 mb-6">Obtido em {selectedCert.date}</p>
-                <a
-                  href={selectedCert.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-full text-white"
-                >
-                  <ExternalLink size={18} />
-                  Ver Certificado
-                </a>
+                {selectedCert.date && (
+                  <p className="text-gray-500 mb-6">Obtido em {selectedCert.date}</p>
+                )}
+                {selectedCert.link && (
+                  <a
+                    href={selectedCert.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-full text-white"
+                  >
+                    <Linkedin size={18} />
+                    Ver no LinkedIn
+                  </a>
+                )}
               </div>
             </motion.div>
           </motion.div>
