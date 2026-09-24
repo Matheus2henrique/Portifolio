@@ -74,11 +74,11 @@ const About = () => {
                 <p className="text-gray-300 leading-relaxed text-lg">
                   {personalInfo.about}
                 </p>
-                <div className="mt-8 grid grid-cols-2 gap-4">
+                <div className="mt-8 flex flex-col gap-4">
                   <div>
                     <p className="text-primary font-medium">Email:</p>
                     <p className="text-gray-400">{personalInfo.email}</p>
-                  </div><br></br>
+                  </div>
                   <div>
                     <p className="text-primary font-medium">Localização:</p>
                     <p className="text-gray-400">{personalInfo.location}</p>
