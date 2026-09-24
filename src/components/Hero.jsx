@@ -112,8 +112,8 @@ const Hero = () => {
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="/curriculo.pdf"
-              download
+              href={`${import.meta.env.BASE_URL}Currículo_MatheusHenrique.pdf`}
+              download="Currículo_MatheusHenrique.pdf"
               className="px-8 py-3 border border-gray-600 rounded-full font-medium text-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
             >
               <Download size={18} />
