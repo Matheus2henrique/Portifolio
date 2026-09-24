@@ -5,9 +5,8 @@ import { personalInfo } from '../data/portfolioData';
 
 const About = () => {
   const stats = [
-    { number: '50+', label: 'Projetos' },
-    { number: '30+', label: 'Clientes' },
-    { number: '5+', label: 'Anos Exp.' },
+    { number: '30+', label: 'Projetos' },
+    { number: '3+', label: 'Anos Exp.' },
     { number: '100%', label: 'Dedicação' },
   ];
 
@@ -124,7 +123,7 @@ const About = () => {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 max-w-4xl mx-auto justify-items-center">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
