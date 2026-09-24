@@ -78,7 +78,7 @@ const About = () => {
                   <div>
                     <p className="text-primary font-medium">Email:</p>
                     <p className="text-gray-400">{personalInfo.email}</p>
-                  </div>
+                  </div><br></br>
                   <div>
                     <p className="text-primary font-medium">Localização:</p>
                     <p className="text-gray-400">{personalInfo.location}</p>
@@ -123,7 +123,7 @@ const About = () => {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 max-w-4xl mx-auto justify-items-center">
+        <div className="flex flex-wrap justify-center gap-8 md:gap-12 mb-20">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -131,7 +131,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="text-center"
+              className="w-32 text-center"
             >
               <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">
                 {stat.number}
